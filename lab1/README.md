@@ -29,7 +29,7 @@ int main() {
     std::string str;
     std::cin >> str;
 
-    std:: cout << bracketsBalance(str) << std::endl;
+    std::cout << bracketsBalance(str) << std::endl;
 
     return 0;
 }
@@ -46,13 +46,12 @@ bool bracketsBalance(std::string & str);
 #include "solve.hpp"
 
 bool bracketsBalance(std::string & str) {
-    bool flag = true;
     int count = 0;
 
     if (str == "") {
         return true;
     }
-    
+
     for (int i = 0; i < str.length(); ++i) {
         if (str[i] == '(') {
             ++count; 
@@ -63,11 +62,7 @@ bool bracketsBalance(std::string & str) {
         }
     }
 
-    if (flag && !count) {
-        return true;
-    } else {
-        return false;
-    }
+    return !count;
 }
 ```
 
@@ -79,37 +74,37 @@ bool bracketsBalance(std::string & str) {
 
 TEST(test1, brackets) {
     std::string s = "()";
-    ASSERT_TRUE(bracketsBalance(s) == true);
+    ASSERT_TRUE(bracketsBalance(s));
 }
 
 TEST(test2, brackets) {
     std::string s = ")(()))";
-    ASSERT_TRUE(bracketsBalance(s) == false);
+    ASSERT_FALSE(bracketsBalance(s));
 }
 
 TEST(test3, brackets) {
     std::string s = "(";
-    ASSERT_TRUE(bracketsBalance(s) == false);
+    ASSERT_FALSE(bracketsBalance(s));
 }
 
 TEST(test4, brackets) {
     std::string s = "(())((()())())";
-    ASSERT_TRUE(bracketsBalance(s) == true);
+    ASSERT_TRUE(bracketsBalance(s));
 }
 
 TEST(test5, brackets) {
     std::string s = ")";
-    ASSERT_TRUE(bracketsBalance(s) == false);
+    ASSERT_FALSE(bracketsBalance(s));
 }
 
 TEST(test6, brackets) {
     std::string s = "(((()";
-    ASSERT_TRUE(bracketsBalance(s) == false);
+    ASSERT_FALSE(bracketsBalance(s));
 }
 
 TEST(test7, brackets) {
     std::string s = "";
-    ASSERT_TRUE(bracketsBalance(s) == true);
+    ASSERT_TRUE(bracketsBalance(s));
 }
 
 int main(int argc, char **argv) {

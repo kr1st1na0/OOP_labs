@@ -1,7 +1,6 @@
 #include "solve.hpp"
 
 bool bracketsBalance(std::string & str) {
-    bool flag = true;
     int count = 0;
 
     if (str == "") {
@@ -18,9 +17,5 @@ bool bracketsBalance(std::string & str) {
         }
     }
 
-    if (flag && !count) {
-        return true;
-    } else {
-        return false;
-    }
+    return !count;
 }
