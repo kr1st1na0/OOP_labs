@@ -29,11 +29,7 @@ int main() {
     std::string str;
     std::cin >> str;
 
-    if (bracketsBalance(str)) {
-        std::cout << "true\n";
-    } else {
-        std::cout << "false\n";
-    }
+    std:: cout << bracketsBalance(str) << std::endl;
 
     return 0;
 }
