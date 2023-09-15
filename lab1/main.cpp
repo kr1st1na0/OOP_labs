@@ -6,7 +6,7 @@ int main() {
     std::string str;
     std::cin >> str;
 
-    std::cout << bracketsBalance(str)<< std::endl;
+    std::cout << std::boolalpha << bracketsBalance(str) << std::endl;
 
     return 0;
 }
