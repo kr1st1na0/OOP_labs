@@ -83,37 +83,37 @@ bool bracketsBalance(std::string & str) {
 
 TEST(test1, brackets) {
     std::string s = "()";
-    ASSERT_TRUE("true");
+    ASSERT_TRUE(bracketsBalance(s) == true);
 }
 
 TEST(test2, brackets) {
     std::string s = ")(()))";
-    ASSERT_TRUE("false");
+    ASSERT_TRUE(bracketsBalance(s) == false);
 }
 
 TEST(test3, brackets) {
     std::string s = "(";
-    ASSERT_TRUE("false");
+    ASSERT_TRUE(bracketsBalance(s) == false);
 }
 
 TEST(test4, brackets) {
     std::string s = "(())((()())())";
-    ASSERT_TRUE("true");
+    ASSERT_TRUE(bracketsBalance(s) == true);
 }
 
 TEST(test5, brackets) {
     std::string s = ")";
-    ASSERT_TRUE("false");
+    ASSERT_TRUE(bracketsBalance(s) == false);
 }
 
 TEST(test6, brackets) {
     std::string s = "(((()";
-    ASSERT_TRUE("false");
+    ASSERT_TRUE(bracketsBalance(s) == false);
 }
 
 TEST(test7, brackets) {
     std::string s = "";
-    ASSERT_TRUE("true");
+    ASSERT_TRUE(bracketsBalance(s) == true);
 }
 
 int main(int argc, char **argv) {
@@ -127,13 +127,9 @@ int main(int argc, char **argv) {
 ```
 kristinab@LAPTOP-SFU9B1F4:/mnt/c/Users/Admin/VScode/C++/oop/lab1/build$ cmake --build .
 Scanning dependencies of target tests
-[ 16%] Building CXX object CMakeFiles/tests.dir/solve.cpp.o
+[ 16%] Building CXX object CMakeFiles/tests.dir/tests.cpp.o
 [ 33%] Linking CXX executable tests
 [ 50%] Built target tests
-Scanning dependencies of target task
-[ 66%] Building CXX object CMakeFiles/task.dir/main.cpp.o
-[ 83%] Building CXX object CMakeFiles/task.dir/solve.cpp.o
-[100%] Linking CXX executable task
 [100%] Built target task
 kristinab@LAPTOP-SFU9B1F4:/mnt/c/Users/Admin/VScode/C++/oop/lab1/build$ ./tests
 [==========] Running 7 tests from 7 test suites.

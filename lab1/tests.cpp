@@ -3,37 +3,37 @@
 
 TEST(test1, brackets) {
     std::string s = "()";
-    ASSERT_TRUE("true");
+    ASSERT_TRUE(bracketsBalance(s) == true);
 }
 
 TEST(test2, brackets) {
     std::string s = ")(()))";
-    ASSERT_TRUE("false");
+    ASSERT_TRUE(bracketsBalance(s) == false);
 }
 
 TEST(test3, brackets) {
     std::string s = "(";
-    ASSERT_TRUE("false");
+    ASSERT_TRUE(bracketsBalance(s) == false);
 }
 
 TEST(test4, brackets) {
     std::string s = "(())((()())())";
-    ASSERT_TRUE("true");
+    ASSERT_TRUE(bracketsBalance(s) == true);
 }
 
 TEST(test5, brackets) {
     std::string s = ")";
-    ASSERT_TRUE("false");
+    ASSERT_TRUE(bracketsBalance(s) == false);
 }
 
 TEST(test6, brackets) {
     std::string s = "(((()";
-    ASSERT_TRUE("false");
+    ASSERT_TRUE(bracketsBalance(s) == false);
 }
 
 TEST(test7, brackets) {
     std::string s = "";
-    ASSERT_TRUE("false");
+    ASSERT_TRUE(bracketsBalance(s) == true);
 }
 
 int main(int argc, char **argv) {
