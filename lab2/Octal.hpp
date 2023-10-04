@@ -16,15 +16,17 @@ class Octal {
         std::ostream &print(std::ostream &os);
 
         //TODO:
-        Octal operator=(const Octal other); //* Assignment operator (=)
-        // Octal operator+(const Octal other) const; //* Addition operator (+)
-        // Octal operator-(const Octal other) const; //* Substraction operator (-)
-        // bool operator>(const Octal other) const; //* Greater operator (>)
-        // bool operator<(const Octal other) const; //* Less operator (<)
-        // bool operator==(const Octal other) const; //* Equal operator (==)
+        Octal operator=(const Octal &other); //* Assignment operator (=)
+        // Octal operator+(const Octal &other) const; //* Addition operator (+)
+        // Octal operator-(const Octal &other) const; //* Substraction operator (-)
+        // bool operator>(const Octal &other) const; //* Greater operator (>)
+        // bool operator<(const Octal &other) const; //* Less operator (<)
+        bool operator==(const Octal &other) const; //* Equal operator (==)
 
        ~Octal() noexcept; //* Destructor
     private:
         size_t size;
         unsigned char *number;
 };
+
+bool isOctal(const char &c);

@@ -1,5 +1,9 @@
 #include "Octal.hpp"
 
+bool isOctal(const char &c) {
+    return (c >= '0' && c <= '7' && c != '-');
+}
+
 Octal::Octal() : size(0), number{nullptr} {}
 
 size_t Octal::getSize() const { return size; }
@@ -20,7 +24,7 @@ Octal::Octal(const std::initializer_list<unsigned char> &t) {
     size = t.size();
     size_t i{size};
     for (unsigned char c : t) {
-        if (c > '7' || c == '-') { 
+        if (!isOctal(c)) { 
             throw std::logic_error("Octal digit can't be negative, 7 or more");
         }
         number[--i] = c;
@@ -32,15 +36,14 @@ Octal::Octal(const std::string t) {
     size  = t.size();
     number = new unsigned char[size];
     for(size_t i = size - 1, j = 0; i >= 0, j < size; i--, j++) {
-        if (t[i] > '7' || t[i] == '-') { 
+        if (!isOctal(t[i])) { 
             throw std::logic_error("Octal digit can't be negative, 7 or more");
         }
-
         number[i] = t[j];
     }
 }
 
-Octal::Octal(const Octal& other) {
+Octal::Octal(const Octal &other) {
     // std::cout << "Copy constructor" << std::endl;
     size  = other.size;
     number = new unsigned char[size];
@@ -49,7 +52,7 @@ Octal::Octal(const Octal& other) {
     }
 }
 
-Octal::Octal(Octal&& other) noexcept {
+Octal::Octal(Octal &&other) noexcept {
     // std::cout << "Move constructor" << std::endl;
     size = other.size;
     number = other.number;
@@ -57,7 +60,7 @@ Octal::Octal(Octal&& other) noexcept {
     other.number = nullptr;
 }
 
-Octal Octal::operator=(const Octal other) {
+Octal Octal::operator=(const Octal &other) {
     if (&other != this) {
         delete[] number;
         size = other.size;
@@ -70,17 +73,25 @@ Octal Octal::operator=(const Octal other) {
 }
 
 //TODO:
-// Octal Octal::operator+(const Octal other) const{}
+// Octal Octal::operator+(const Octal &other) const{}
 
-// Octal Octal::operator-(const Octal other) const{}
+// Octal Octal::operator-(const Octal &other) const{}
 
-// bool Octal::operator>(const Octal other) const{}
+// bool Octal::operator>(const Octal &other) const{}
 
-// bool Octal::operator<(const Octal other) const{}
+// bool Octal::operator<(const Octal &other) const{}
 
-// bool Octal::operator==(const Octal other) const{}
+bool Octal::operator==(const Octal &other) const{
+    if (other.size != size) { return 1; }
+    for (int i = 0; i < size; i++) {
+        if (other.number[i] != number[i]) {
+            return 1;
+        }
+    }
+    return 0;
+}
 
-std::ostream &Octal::print(std::ostream &os) {
+std::ostream& Octal::print(std::ostream &os) {
     for (size_t i = size; i--;) {
         os << number[i];
     }
@@ -96,14 +107,15 @@ Octal::~Octal() noexcept {
 }
 
 int main() {
-    // std::initializer_list<unsigned char> list = {'1', '3', '4', '5'};
-    // Octal num1(list);
+    std::initializer_list<unsigned char> list = {'1', '3', '4', '5'};
+    Octal num2(list);
 
-    std::string str = "1245";
+    std::string str1 = "1276";
+    Octal num1(str1);
+
+    std::string str = "1275";
     Octal num(str);
 
-
-    // Copy constructor
     Octal tmp(num);
     tmp.print(std::cout) << std::endl;
 
@@ -111,6 +123,8 @@ int main() {
 
     Octal t = tmp;
     t.print(std::cout) << std::endl;
+
+    std::cout << (num1 == num) << std::endl;
     
     return 0;
 }
