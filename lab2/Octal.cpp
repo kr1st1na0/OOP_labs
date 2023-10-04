@@ -78,38 +78,45 @@ Octal Octal::operator=(const Octal &other) {
 // Octal Octal::operator-(const Octal &other) const {}
 
 bool Octal::operator==(const Octal &other) const {
-    if (other.size != size) { return 1; }
+    if (size != other.size) { return 0; }
     for (size_t i = 0; i < size; i++) {
-        if (other.number[i] != number[i]) {
-            return 1;
-        }
-    }
-    return 0;
-}
-
-bool Octal::operator<(const Octal &other) const {
-    if (&other == this) { throw std::logic_error("The same object"); }
-    if (size < other.size) { return 0; }
-    else if (size > other.size) { return 1; }
-    else {
-        for (size_t i = size; i--;) {
-            if (number[i] < other.number[i]) { return 0; }
-            else if (number[i] > other.number[i]) { return 1; }
+        if (number[i] != other.number[i]) {
+            return 0;
         }
     }
     return 1;
 }
 
-bool Octal::operator>(const Octal other) const {
+bool Octal::operator!=(const Octal &other) const {
+    if (*this == other) { return 0; }
+    return 1;
+ }
+
+bool Octal::operator<(const Octal &other) const {
     if (&other == this) { throw std::logic_error("The same object"); }
-    if (size > other.size) { return 0; }
-    else if (size < other.size) { return 1; }
+    if (size < other.size) { return 1; }
+    else if (size > other.size) { return 0; }
     else {
         for (size_t i = size; i--;) {
-            if (number[i] > other.number[i]) { return 0; }
-            else if (number[i] < other.number[i]) { return 1; }
+            if (number[i] < other.number[i]) { return 1; }
+            else if (number[i] > other.number[i]) { return 0; }
         }
     }
+    return 0;
+}
+
+bool Octal::operator<=(const Octal &other) const {
+    if (*this > other) { return 0; }
+    return 1;
+}
+
+bool Octal::operator>(const Octal other) const {
+    if (*this < other || *this == other) { return 0; }
+    return 1;
+}
+
+bool Octal::operator>=(const Octal other) const {
+    if (*this < other) { return 0; }
     return 1;
 }
 
@@ -132,15 +139,13 @@ int main() {
     // std::initializer_list<unsigned char> list = {'1', '3', '4', '5'};
     // Octal num2(list);
 
-    std::string str = "145";
+    std::string str = "14";
     Octal num1(str);
 
     Octal num2("14");
 
-    std::cout << (num1 > num2) << std::endl;
+    std::cout << (num1 != num2) << std::endl;
     
-    
-
 
 
     // Octal tmp(num);

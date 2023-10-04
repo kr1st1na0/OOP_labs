@@ -20,8 +20,11 @@ class Octal {
         // Octal operator+(const Octal &other) const; //* Addition operator (+)
         // Octal operator-(const Octal &other) const; //* Substraction operator (-)
         bool operator==(const Octal &other) const; //* Equal operator (==)
+        bool operator!=(const Octal &other) const; //* Not equal operator (!=)
         bool operator<(const Octal &other) const; //* Less operator (<)
+        bool operator<=(const Octal &other) const; //* Less or equal operator (<=)
         bool operator>(const Octal other) const; //* Greater operator (>)
+        bool operator>=(const Octal other) const; //* Greater or equal operator (>=)
 
        ~Octal() noexcept; //* Destructor
     private:
