@@ -73,22 +73,44 @@ Octal Octal::operator=(const Octal &other) {
 }
 
 //TODO:
-// Octal Octal::operator+(const Octal &other) const{}
+// Octal Octal::operator+(const Octal &other) const {}
 
-// Octal Octal::operator-(const Octal &other) const{}
+// Octal Octal::operator-(const Octal &other) const {}
 
-// bool Octal::operator>(const Octal &other) const{}
-
-// bool Octal::operator<(const Octal &other) const{}
-
-bool Octal::operator==(const Octal &other) const{
+bool Octal::operator==(const Octal &other) const {
     if (other.size != size) { return 1; }
-    for (int i = 0; i < size; i++) {
+    for (size_t i = 0; i < size; i++) {
         if (other.number[i] != number[i]) {
             return 1;
         }
     }
     return 0;
+}
+
+bool Octal::operator<(const Octal &other) const {
+    if (&other == this) { throw std::logic_error("The same object"); }
+    if (size < other.size) { return 0; }
+    else if (size > other.size) { return 1; }
+    else {
+        for (size_t i = size; i--;) {
+            if (number[i] < other.number[i]) { return 0; }
+            else if (number[i] > other.number[i]) { return 1; }
+        }
+    }
+    return 1;
+}
+
+bool Octal::operator>(const Octal other) const {
+    if (&other == this) { throw std::logic_error("The same object"); }
+    if (size > other.size) { return 0; }
+    else if (size < other.size) { return 1; }
+    else {
+        for (size_t i = size; i--;) {
+            if (number[i] > other.number[i]) { return 0; }
+            else if (number[i] < other.number[i]) { return 1; }
+        }
+    }
+    return 1;
 }
 
 std::ostream& Octal::print(std::ostream &os) {
@@ -107,24 +129,27 @@ Octal::~Octal() noexcept {
 }
 
 int main() {
-    std::initializer_list<unsigned char> list = {'1', '3', '4', '5'};
-    Octal num2(list);
+    // std::initializer_list<unsigned char> list = {'1', '3', '4', '5'};
+    // Octal num2(list);
 
-    std::string str1 = "1276";
-    Octal num1(str1);
+    std::string str = "145";
+    Octal num1(str);
 
-    std::string str = "1275";
-    Octal num(str);
+    Octal num2("14");
 
-    Octal tmp(num);
-    tmp.print(std::cout) << std::endl;
-
-    num.print(std::cout) << std::endl;
-
-    Octal t = tmp;
-    t.print(std::cout) << std::endl;
-
-    std::cout << (num1 == num) << std::endl;
+    std::cout << (num1 > num2) << std::endl;
     
+    
+
+
+
+    // Octal tmp(num);
+    // tmp.print(std::cout) << std::endl;
+
+    // num.print(std::cout) << std::endl;
+
+    // Octal t = tmp;
+    // t.print(std::cout) << std::endl;
+
     return 0;
 }
