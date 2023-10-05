@@ -72,9 +72,29 @@ Octal Octal::operator=(const Octal &other) {
     return *this;
 }
 
-//TODO:
-// Octal Octal::operator+(const Octal &other) const {}
+Octal Octal::operator+(const Octal &other) const {
+    size_t resultSize = std::max(other.size, size) + 1;
+    std::string result(resultSize, '0');
+    int carry = 0;
+    for (int i = 0; i < resultSize; i++) {
+        int d1 = (i < size) ? (number[i] - '0') : 0;
+        int d2 = (i < other.size) ? (other.number[i] - '0') : 0;
 
+        int sum = d1 + d2 + carry;
+        result[i] = (sum % 8) + '0';
+        carry = sum / 8;
+    }
+    if (carry > 0) {
+        result[resultSize - 1] = carry + '0';
+    }
+    if (result[resultSize - 1] == '0'){
+        result.erase(resultSize - 1, 1);
+    }
+    std::reverse(result.begin(), result.end());
+    return Octal(result);
+}
+
+//TODO:
 // Octal Octal::operator-(const Octal &other) const {}
 
 bool Octal::operator==(const Octal &other) const {
@@ -133,28 +153,4 @@ Octal::~Octal() noexcept {
         delete[] number;
         number = nullptr;
     }
-}
-
-int main() {
-    // std::initializer_list<unsigned char> list = {'1', '3', '4', '5'};
-    // Octal num2(list);
-
-    std::string str = "14";
-    Octal num1(str);
-
-    Octal num2("14");
-
-    std::cout << (num1 != num2) << std::endl;
-    
-
-
-    // Octal tmp(num);
-    // tmp.print(std::cout) << std::endl;
-
-    // num.print(std::cout) << std::endl;
-
-    // Octal t = tmp;
-    // t.print(std::cout) << std::endl;
-
-    return 0;
 }

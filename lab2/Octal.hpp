@@ -1,6 +1,7 @@
 #pragma once
 #include <iostream>
 #include <cstring>
+#include <algorithm>
 
 class Octal {    
     public:
@@ -15,9 +16,8 @@ class Octal {
         Octal(Octal&& other) noexcept; //* Move constructor
         std::ostream &print(std::ostream &os);
 
-        //TODO:
         Octal operator=(const Octal &other); //* Assignment operator (=)
-        // Octal operator+(const Octal &other) const; //* Addition operator (+)
+        Octal operator+(const Octal &other) const; //* Addition operator (+)
         // Octal operator-(const Octal &other) const; //* Substraction operator (-)
         bool operator==(const Octal &other) const; //* Equal operator (==)
         bool operator!=(const Octal &other) const; //* Not equal operator (!=)
