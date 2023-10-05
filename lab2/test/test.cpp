@@ -67,11 +67,17 @@ TEST(test11, addition) {
     ASSERT_TRUE((num1 + num2) == Octal("23"));
 }
 
-// TEST(test12, substraction) {
-//     Octal num1("76");
-//     Octal num2({'6'});
-//     ASSERT_TRUE((num1 - num2) == Octal("70"));
-// }
+TEST(test12, substraction1) {
+    Octal num1("76");
+    Octal num2({'6'});
+    ASSERT_TRUE((num1 - num2) == Octal("70"));
+}
+
+TEST(test12, substraction2) {
+    Octal num1("31");
+    Octal num2({'7'});
+    ASSERT_TRUE((num1 - num2) == Octal("22"));
+}
 
 int main(int argc, char **argv) {
     testing::InitGoogleTest(&argc, argv);

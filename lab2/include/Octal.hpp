@@ -18,7 +18,7 @@ class Octal {
 
         Octal operator=(const Octal &other); //* Assignment operator (=)
         Octal operator+(const Octal &other) const; //* Addition operator (+)
-        // Octal operator-(const Octal &other) const; //* Substraction operator (-)
+        Octal operator-(const Octal &other) const; //* Substraction operator (-)
         bool operator==(const Octal &other) const; //* Equal operator (==)
         bool operator!=(const Octal &other) const; //* Not equal operator (!=)
         bool operator<(const Octal &other) const; //* Less operator (<)
