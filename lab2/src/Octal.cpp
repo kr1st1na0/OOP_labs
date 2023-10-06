@@ -135,7 +135,7 @@ bool Octal::operator!=(const Octal &other) const {
  }
 
 bool Octal::operator<(const Octal &other) const {
-    if (&other == this) { throw std::logic_error("The same object"); }
+    if (&other == this) { return 0; }
     if (size < other.size) { return 1; }
     else if (size > other.size) { return 0; }
     else {
