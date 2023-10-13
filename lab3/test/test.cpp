@@ -41,7 +41,7 @@ TEST(rectangle, points) {
     Point p2 = {-5, 3};
     Point p3 = {2, 3};
     Point p4 = {2, -4};
-    Rectangle r(p1, p2, p3, p4);
+    Rectangle r(Point(-5, -4), p2, p3, p4);
     ASSERT_EQ(r.square(), 49.00);
 }
 

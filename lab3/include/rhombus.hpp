@@ -17,7 +17,7 @@ public:
     Rhombus(Rhombus &&other) noexcept; //* Move constructor
     bool operator==(const Rhombus &other) const; //* Assignment operator
     
-    virtual ~Rhombus() = default;
+    ~Rhombus() = default;
 private:
     Point points[4]; // left, top, right, bottom
 };

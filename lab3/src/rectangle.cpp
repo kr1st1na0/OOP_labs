@@ -6,7 +6,7 @@ Rectangle::Rectangle(std::istream &is) {
     }
 }
 
-Rectangle::Rectangle(Point &p1, Point &p2, Point &p3, Point &p4) {
+Rectangle::Rectangle(Point &&p1, Point &p2, Point &p3, Point &p4) {
     points[0] = p1;
     points[1] = p2;
     points[2] = p3;

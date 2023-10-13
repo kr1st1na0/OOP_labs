@@ -17,7 +17,7 @@ public:
     Trapezoid(Trapezoid &&other) noexcept; //* Move constructor
     bool operator==(const Trapezoid &other) const; //* Assignment operator
     
-    virtual ~Trapezoid() = default;
+    ~Trapezoid() = default;
 private:
     Point points[4]; // bottom-left, top-left, top-right, bottom-right
 };
