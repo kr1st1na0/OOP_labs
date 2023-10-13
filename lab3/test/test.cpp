@@ -35,6 +35,16 @@ TEST(rectangle, center) {
     ASSERT_EQ(r.center().getX(), 3.00);
     ASSERT_EQ(r.center().getY(), 0.00);
 }
+
+TEST(rectangle, points) {
+    Point p1 = {-5, -4};
+    Point p2 = {-5, 3};
+    Point p3 = {2, 3};
+    Point p4 = {2, -4};
+    Rectangle r(p1, p2, p3, p4);
+    ASSERT_EQ(r.square(), 49.00);
+}
+
 TEST(rhombus, copy) {
     std::stringstream stream;
     stream << "7 6\n10 7\n9 4\n6 3\n";

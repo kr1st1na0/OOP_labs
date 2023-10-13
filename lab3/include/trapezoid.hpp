@@ -6,11 +6,12 @@
 class Trapezoid : public Figure {
 public:
     Trapezoid() = default;
+    Trapezoid(Point &p1, Point &p2, Point &p3, Point &p4);
     Trapezoid(std::istream &is);
 
-    void print(std::ostream &os) const override;
-    double square() const override;
-    Point center() const override;
+    void print(std::ostream &os) const;
+    double square() const;
+    Point center() const;
    
     Trapezoid(const Trapezoid &other); //* Copy constructor
     Trapezoid(Trapezoid &&other) noexcept; //* Move constructor

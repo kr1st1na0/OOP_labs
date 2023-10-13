@@ -6,12 +6,13 @@
 class Rectangle : public Figure {
 public:
     Rectangle() = default;
+    Rectangle(Point &p1, Point &p2, Point &p3, Point &p4);
     Rectangle(std::istream &is);
 
-    void print(std::ostream &os) const override;
-    double square() const override;
-    Point center() const override;
-   
+    void print(std::ostream &os) const;
+    double square() const;
+    Point center() const;
+
     Rectangle(const Rectangle &other); //* Copy constructor
     Rectangle(Rectangle &&other) noexcept; //* Move constructor
     bool operator==(const Rectangle &other) const; //* Assignment operator
