@@ -2,13 +2,14 @@
 
 #include "point.hpp"
 #include "figure.hpp"
+#include "figures.hpp"
 #include "rectangle.hpp"
 #include "rhombus.hpp"
 #include "trapezoid.hpp"
 
 int main() {
-    int comand = 1;
-    std::vector<Figure*> figures;
+    int command = 1;
+    Figures figuresArr;
     std::cout << "Comands:"  << std::endl <<
     "1 - create new figure;" << std::endl <<
     "2 - delete the figure;" << std::endl <<
@@ -17,12 +18,12 @@ int main() {
     "5 - calculate the center of the figures;" << std::endl <<
     "6 - calculate the total area of figures;" << std::endl <<
     "0 - exit." << std::endl;
-    while (comand) {
-        std::cin >> comand;
-        if (comand > 6 || comand < 0) {
-            std::cout << "Wrong comand" << std::endl;
+    while (command) {
+        std::cin >> command;
+        if (command > 6 || command < 0) {
+            std::cout << "Wrong command" << std::endl;
         }
-        switch (comand) {
+        switch (command) {
             case 1:
                 std::cout << "Figures:" << std::endl <<
                 "1 - Rectangle" << std::endl <<
@@ -38,43 +39,37 @@ int main() {
                 } else if (figureComand == 3) {
                     f = new Trapezoid(std::cin);
                 } else {
-                    std::cout << "Wrong comand" << std::endl;
+                    std::cout << "Wrong command" << std::endl;
                 }
-                figures.push_back(f);
+                figuresArr.addFigure(f);
                 break;
             case 2:
                 std::cout << "Enter the index" << std::endl;
                 int indexComand;
                 std::cin >> indexComand;
-                if (indexComand >= figures.size()) {
-                    std::cout << "Index is greater than the array size" << std::endl;
-                } else {
-                    delete figures[indexComand];
-                    figures.erase(figures.begin() + indexComand);
-                }
+                figuresArr.deleteFigure(indexComand);
                 break;
             case 3:
-                for (const auto &f : figures) {
+                for (size_t i = 0; i < figuresArr.getSize(); ++i) {
+                    Figure* f = figuresArr.getFigure(i);
                     std::cout << "Coordinates: ";
                     f->print(std::cout);
                 }
                 break;
             case 4:
-                for (const auto &f : figures) {
+                for (size_t i = 0; i < figuresArr.getSize(); ++i) {
+                    Figure* f = figuresArr.getFigure(i);
                     std::cout << "Area: " << f->square() << std::endl;
                 }
                 break;
             case 5:
-                for (const auto &f : figures) {
+                for (size_t i = 0; i < figuresArr.getSize(); ++i) {
+                    Figure* f = figuresArr.getFigure(i);
                     std::cout << "Center: " << f->center() << std::endl;
                 }
                 break;
             case 6:
-                double result = 0;
-                for (const auto &f : figures) {
-                    result += f->square();
-                }
-                std::cout << "Total area: " << result << std::endl;
+                std::cout << "Totsal area: " << figuresArr.totalArea() << std::endl;
                 break;
         }
     }
@@ -84,6 +79,9 @@ int main() {
 
 /* Example:
 figures: 1 (rectangle), 2 (rhombus), 3 (trapezoid)
+0 4 1 6 9 2 8 0
+2 5 6 6 5 2 1 1
+1 8 4 4 6 4 5 8
 
 Coordinates: (0;4) (1;6) (9;2) (8;0) 
 Coordinates: (2;5) (6;6) (5;2) (1;1) 

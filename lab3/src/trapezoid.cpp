@@ -1,7 +1,7 @@
 #include "trapezoid.hpp"
 
 Trapezoid::Trapezoid(std::istream &is) {
-    for (size_t i = 0; i < 4; i++) {
+    for (size_t i = 0; i < 4; ++i) {
         is >> points[i];
     }
 }
@@ -57,21 +57,26 @@ Point Trapezoid::center() const {
     return Point(x, y);
 }
 
-Trapezoid::Trapezoid(const Trapezoid &other) {
-    for (size_t i = 0; i < 4; i++) {
-        points[i] = other.points[i];
+Figure& Trapezoid::move(Figure &&other) noexcept {
+    const Trapezoid *otherTrapezoid = dynamic_cast<const Trapezoid*>(&other);
+    for (size_t i = 0; i < 4; ++i) {
+        points[i] = std::move(otherTrapezoid->points[i]);
     }
+    return *this;
 }
 
-Trapezoid::Trapezoid(Trapezoid &&other) noexcept {
-    for (size_t i = 0; i < 4; i++) {
-        points[i] = std::move(other.points[i]);
+Figure& Trapezoid::operator=(const Figure &other) {
+    const Trapezoid *otherTrapezoid = dynamic_cast<const Trapezoid*>(&other);
+    for (size_t i = 0; i < 4; ++i) {
+        points[i] = otherTrapezoid->points[i];
     }
+    return *this;
 }
 
-bool Trapezoid::operator==(const Trapezoid &other) const {
-    for (size_t i = 0; i < 4; i++) {
-        if (points[i].getX() != other.points[i].getX() || points[i].getY() != other.points[i].getY()) {
+bool Trapezoid::operator==(const Figure &other) const {
+    const Trapezoid *otherTrapezoid = dynamic_cast<const Trapezoid*>(&other);
+    for (size_t i = 0; i < 4; ++i) {
+        if (points[i].getX() != otherTrapezoid->points[i].getX() || points[i].getY() != otherTrapezoid->points[i].getY()) {
             return 0;
         }
     }

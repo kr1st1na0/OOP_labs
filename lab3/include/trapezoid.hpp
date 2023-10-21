@@ -13,11 +13,11 @@ public:
     double square() const;
     Point center() const;
    
-    Trapezoid(const Trapezoid &other); //* Copy constructor
-    Trapezoid(Trapezoid &&other) noexcept; //* Move constructor
-    bool operator==(const Trapezoid &other) const; //* Assignment operator
+    Figure& move(Figure &&other) noexcept; //* Move constructor
+    Figure& operator=(const Figure &other); //* Copy constructor
+    bool operator==(const Figure &other) const; //* Assignment operator
     
-    ~Trapezoid() = default;
+    virtual ~Trapezoid() = default;
 private:
     Point points[4]; // bottom-left, top-left, top-right, bottom-right
 };

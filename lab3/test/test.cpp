@@ -24,8 +24,8 @@ TEST(rectangle1, square) {
 TEST(rectangle2, square) {
     std::stringstream stream;
     stream << "0 4\n1 6\n9 2\n8 0\n";
-    Rectangle r(stream);
-    ASSERT_EQ(r.square(), 20.00);
+    Figure *r = new Rectangle(stream);
+    ASSERT_EQ(r->square(), 20.00);
 }
 
 TEST(rectangle, center) {

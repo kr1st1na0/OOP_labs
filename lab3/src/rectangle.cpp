@@ -1,7 +1,7 @@
 #include "rectangle.hpp"
 
 Rectangle::Rectangle(std::istream &is) {
-    for (size_t i = 0; i < 4; i++) {
+    for (size_t i = 0; i < 4; ++i) {
         is >> points[i];
     }
 }
@@ -43,21 +43,26 @@ Point Rectangle::center() const {
     return Point(x, y);
 }
 
-Rectangle::Rectangle(const Rectangle &other) {
-    for (size_t i = 0; i < 4; i++) {
-        points[i] = other.points[i];
+Figure& Rectangle::move(Figure &&other) noexcept {
+    const Rectangle *otherRectangle = dynamic_cast<const Rectangle*>(&other);
+    for (size_t i = 0; i < 4; ++i) {
+        points[i] = std::move(otherRectangle->points[i]);
     }
+    return *this;
 }
 
-Rectangle::Rectangle(Rectangle &&other) noexcept {
-    for (size_t i = 0; i < 4; i++) {
-        points[i] = std::move(other.points[i]);
+Figure& Rectangle::operator=(const Figure &other) {
+    const Rectangle *otherRectangle = dynamic_cast<const Rectangle*>(&other);
+    for (size_t i = 0; i < 4; ++i) {
+        points[i] = otherRectangle->points[i];
     }
+    return *this;
 }
 
-bool Rectangle::operator==(const Rectangle &other) const {
-    for (size_t i = 0; i < 4; i++) {
-        if (points[i].getX() != other.points[i].getX() || points[i].getY() != other.points[i].getY()) {
+bool Rectangle::operator==(const Figure &other) const {
+    const Rectangle *otherRectangle = dynamic_cast<const Rectangle*>(&other);
+    for (size_t i = 0; i < 4; ++i) {
+        if (points[i].getX() != otherRectangle->points[i].getX() || points[i].getY() != otherRectangle->points[i].getY()) {
             return 0;
         }
     }

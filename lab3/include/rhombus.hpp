@@ -13,11 +13,11 @@ public:
     double square() const;
     Point center() const;
    
-    Rhombus(const Rhombus &other); //* Copy constructor
-    Rhombus(Rhombus &&other) noexcept; //* Move constructor
-    bool operator==(const Rhombus &other) const; //* Assignment operator
+    Figure& move(Figure &&other) noexcept; //* Move constructor
+    Figure& operator=(const Figure &other); //* Copy constructor
+    bool operator==(const Figure &other) const; //* Assignment operator
     
-    ~Rhombus() = default;
+    virtual ~Rhombus() = default;
 private:
     Point points[4]; // left, top, right, bottom
 };

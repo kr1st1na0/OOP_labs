@@ -13,11 +13,11 @@ public:
     double square() const;
     Point center() const;
 
-    Rectangle(const Rectangle &other); //* Copy constructor
-    Rectangle(Rectangle &&other) noexcept; //* Move constructor
-    bool operator==(const Rectangle &other) const; //* Assignment operator
+    Figure& move(Figure &&other) noexcept; //* Move constructor
+    Figure& operator=(const Figure &other); //* Copy constructor
+    bool operator==(const Figure &other) const; //* Assignment operator
     
-    ~Rectangle() = default;
+    virtual ~Rectangle() = default;
 private:
     Point points[4]; // bottom-left, top-left, top-right, bottom-right
 };

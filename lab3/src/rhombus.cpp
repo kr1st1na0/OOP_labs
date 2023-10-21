@@ -1,7 +1,7 @@
 #include "rhombus.hpp"
 
 Rhombus::Rhombus(std::istream &is) {
-    for (size_t i = 0; i < 4; i++) {
+    for (size_t i = 0; i < 4; ++i) {
         is >> points[i];
     }
 }
@@ -43,21 +43,26 @@ Point Rhombus::center() const {
     return Point(x, y);
 }
 
-Rhombus::Rhombus(const Rhombus &other) {
-    for (size_t i = 0; i < 4; i++) {
-        points[i] = other.points[i];
+Figure& Rhombus::move(Figure &&other) noexcept {
+    const Rhombus *otherRhombus = dynamic_cast<const Rhombus*>(&other);
+    for (size_t i = 0; i < 4; ++i) {
+        points[i] = std::move(otherRhombus->points[i]);
     }
+    return *this;
 }
 
-Rhombus::Rhombus(Rhombus &&other) noexcept {
-    for (size_t i = 0; i < 4; i++) {
-        points[i] = std::move(other.points[i]);
+Figure& Rhombus::operator=(const Figure &other) {
+    const Rhombus *otherRhombus = dynamic_cast<const Rhombus*>(&other);
+    for (size_t i = 0; i < 4; ++i) {
+        points[i] = otherRhombus->points[i];
     }
+    return *this;
 }
 
-bool Rhombus::operator==(const Rhombus &other) const {
-    for (size_t i = 0; i < 4; i++) {
-        if (points[i].getX() != other.points[i].getX() || points[i].getY() != other.points[i].getY()) {
+bool Rhombus::operator==(const Figure &other) const {
+    const Rhombus *otherRhombus = dynamic_cast<const Rhombus*>(&other);
+    for (size_t i = 0; i < 4; ++i) {
+        if (points[i].getX() != otherRhombus->points[i].getX() || points[i].getY() != otherRhombus->points[i].getY()) {
             return 0;
         }
     }
