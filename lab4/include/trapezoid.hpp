@@ -1,76 +1,78 @@
 #pragma once
 
-#include "point.hpp"
 #include "figure.hpp"
 
-template <class T>
-struct Trapezoid {
-    std::array<point_t<T>, 4> points; // bottom-left, top-left, top-right, bottom-right
-    Trapezoid(const point_t<T> &p1, const point_t<T> &p2, const point_t<T> &p3, const point_t<T> &p4);
-    double square() const;
-    point_t<T> center() const;
-    void print(std::ostream &os) const;
-}
+template <typename T>
+class Trapezoid : public Figure<T> {
+public:
+    std::vector<std::pair<T, T> > points; // bottom-left, top-left, top-right, bottom-right
 
-template <class T>
-Trapezoid::Trapezoid(const point_t<T> &p1, const point_t<T> &p2, const point_t<T> &p3, const point_t<T> &p4) {
-    points[0] = p1;
-    points[1] = p2;
-    points[2] = p3;
-    points[3] = p4;
-}
-
-template <class T>
-double Trapezoid<T>::square() const {
-    double square = 0;
-
-    double x1 = (points[2].x - points[1].x) * (points[2].x - points[1].x);
-    double y1 = (points[2].y - points[1].y) * (points[2].y - points[1].y);
-    double a = std::sqrt(x1 + y1);
-
-    double x2 = (points[3].x - points[0].x) * (points[3].x - points[0].x);
-    double y2 = (points[3].y - points[0].y) * (points[3].y - points[0].y);
-    double b = std::sqrt(x2 + y2);
-
-    double h = std::fabs(points[1].y - points[0].y);
-    square = h * (a + b) / 2;
-    return floor(square * 100) / 100;
-}
-
-template <class T>
-point_t<T> Trapezoid<T>::center() const {
-    T x = 0;
-    T y = 0;
-
-    double x1 = (points[2].x - points[1].x) * (points[2].x - points[1].x);
-    double y1 = (points[2].y - points[1].y) * (points[2].y - points[1].y);
-    double a = std::sqrt(x1 + y1);
-
-    double x2 = (points[3].x - points[0].x) * (points[3].x - points[0].x);
-    double y2 = (points[3].y - points[0].y) * (points[3].y - points[0].y);
-    double b = std::sqrt(x2 + y2);
-
-    double h = points[1].y - points[0].y;
-    double min = std::min(a, b); 
-    double max = std::max(a, b);
-
-    x = floor((h / 2) * 100) / 100;
-    y = floor((((max + 2 * min) * h) / (3 * (min + max))) * 100) / 100;
-    return {x, y};
-}
-
-
-template <class T>
-void Trapezoid<T>::print(std::ostream &os) const {
-    for (const auto &p : points) {
-        os << p << " ";
+    Trapezoid() {
+        points.resize(4, {0, 0});
     }
-    os << std::endl;
-}
-    
-    
 
-    // Figure& move(Figure &&other) noexcept; //* Move constructor
-    // Figure& operator=(const Figure &other); //* Copy constructor
-    // bool operator==(const Figure &other) const; //* Assignment operator
-    
+    Trapezoid(const std::vector<std::pair<T, T> > &v) : points(v) {
+        if (v.size() != 4) {
+            throw std::logic_error("Trapezoid must have 4 points");
+        }
+    }
+
+    T square() const {
+        T a = points[2].first - points[1].first;
+        T b = points[3].first - points[0].first;
+
+        T h = points[1].second - points[0].second;
+        T square = h * (a + b) / 2;
+        return square;
+    }
+
+    typename Figure<T>::point center() const {
+        T x = (points[2].first - points[1].first + points[3].first - points[0].first) / 2;
+        T y = (points[1].second - points[0].second) / 2;
+        return {x, y};
+    }
+
+    Trapezoid& operator=(const Trapezoid<T> &other) {
+        points = other.points;
+        return *this;
+    }
+
+    Trapezoid& operator=(Trapezoid<T> &&other) {
+        points = std::move(other.points);
+        return *this;
+    }
+
+    bool operator==(const Trapezoid &other) const {
+        for (size_t i = 0; i < 4; ++i) {
+            if (points[i] != other.points[i]) {
+                return 0;
+            }
+        }
+        return 1;
+    }
+
+    operator double() const override;
+
+    ~Trapezoid() = default;
+};
+
+template <typename T>
+std::istream &operator>>(std::istream &is, Trapezoid<T> &r) {
+    for (size_t i = 0; i < 4; ++i) {
+        is >> r.points[i].first >> r.points[i].second;
+    }
+    return is;
+}
+
+template <typename T>
+std::ostream &operator<<(std::ostream &os, const Trapezoid<T> &r) {
+    for (size_t i = 0; i < 4; ++i) {
+        os << "(" << r.points[i].first << ";" << r.points[i].second << ")"; 
+    }
+    return os;
+}
+
+template <typename T>
+inline Trapezoid<T>::operator double() const {
+    return static_cast<double>(this->square());
+}

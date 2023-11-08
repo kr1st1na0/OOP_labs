@@ -6,24 +6,22 @@ find_package(GTest REQUIRED)
 set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
+
 set(INCLUDE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/include)
-set(SOURCE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/src)
-set(TEST_DIR ${CMAKE_CURRENT_SOURCE_DIR}/test)
 
 include_directories(${INCLUDE_DIR})
 
+add_library(lab4_lib INTERFACE)
+target_include_directories(lab4_lib INTERFACE ${INCLUDE_DIR})
+
+
 file(GLOB_RECURSE TEST_SOURCES LIST_DIRECTORIES false test.cpp)
 
-add_library(${CMAKE_PROJECT_NAME}_lib ${SOURCES})
-add_executable(${CMAKE_PROJECT_NAME}_exe main.cpp)
-add_executable(${CMAKE_PROJECT_NAME}_test ${TEST_SOURCES})
-
-target_link_libraries(${CMAKE_PROJECT_NAME}_exe PRIVATE ${CMAKE_PROJECT_NAME}_lib)
-target_include_directories(${CMAKE_PROJECT_NAME}_test PRIVATE ${gtest_SOURCE_DIR}/include ${gtest_SOURCE_DIR})
-target_link_libraries(${CMAKE_PROJECT_NAME}_test PRIVATE ${CMAKE_PROJECT_NAME}_lib gtest gtest_main)
+add_executable(lab4_test ${TEST_SOURCES})
+target_link_libraries(lab4_test PRIVATE lab4_lib GTest::GTest GTest::Main)
 
 find_package(Threads REQUIRED) 
-target_link_libraries(${CMAKE_PROJECT_NAME}_test PRIVATE Threads::Threads) 
+target_link_libraries(lab4_test PRIVATE Threads::Threads) 
 
 
-add_test(NAME BASIC COMMAND tests)
+add_test(NAME lab4_test COMMAND lab4_test)

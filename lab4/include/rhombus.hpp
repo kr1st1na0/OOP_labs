@@ -1,62 +1,76 @@
 #pragma once
 
-#include "point.hpp"
 #include "figure.hpp"
 
-template <class T>
-struct Rhombus {
-    std::array<point_t<T>, 4> points; // left, top, right, bottom
-    Rhombus(const point_t<T> &p1, const point_t<T> &p2, const point_t<T> &p3, const point_t<T> &p4);
-    double square() const;
-    point_t<T> center() const;
-    void print(std::ostream &os) const;
-}
+template <typename T>
+class Rhombus : public Figure<T> {
+public:
+    std::vector<std::pair<T, T> > points; // left, top, right, bottom
 
-template <class T>
-Rhombus::Rhombus(const point_t<T> &p1, const point_t<T> &p2, const point_t<T> &p3, const point_t<T> &p4) {
-    points[0] = p1;
-    points[1] = p2;
-    points[2] = p3;
-    points[3] = p4;
-}
-
-template <class T>
-double Rhombus<T>::square() const {
-    double square = 0;
-
-    double x1 = (points[2].x - points[0].x) * (points[2].x - points[0].x);
-    double y1 = (points[2].y - points[0].y) * (points[2].y - points[0].y);
-    double d1 = std::sqrt(x1 + y1);
-
-    double x2 = (points[1].x - points[3].x) * (points[1].x - points[3].x);
-    double y2 = (points[1].y - points[3].y) * (points[1].y - points[3].y);
-    double d2 = std::sqrt(x2 + y2);
-
-    square = d1 * d2 / 2;
-    return floor(square * 100) / 100;
-}
-
-template <class T>
-point_t<T> Rhombus<T>::center() const {
-    T x = 0;
-    T y = 0;
-    x = floor(((points[2].x + points[0].x) / 2) * 100) / 100;
-    y = floor(((points[2].y + points[0].y) / 2) * 100) / 100; 
-    return {x, y};
-}
-
-
-template <class T>
-void Rhombus<T>::print(std::ostream &os) const {
-    for (const auto &p : points) {
-        os << p << " ";
+    Rhombus() {
+        points.resize(4, {0, 0});
     }
-    os << std::endl;
-}
-    
-    
 
-    // Figure& move(Figure &&other) noexcept; //* Move constructor
-    // Figure& operator=(const Figure &other); //* Copy constructor
-    // bool operator==(const Figure &other) const; //* Assignment operator
-    
+    Rhombus(const std::vector<std::pair<T, T> > &v) : points(v) {
+        if (v.size() != 4) {
+            throw std::logic_error("Rhombus must have 4 points");
+        }
+    }
+
+    T square() const {
+        T d1 = points[2].first - points[0].first;
+        T d2 = points[1].second - points[3].second;
+        T square = d1 * d2 / 2;
+        return square;
+    }
+
+    typename Figure<T>::point center() const {
+        T x = (points[2].first - points[0].first) / 2;
+        T y = (points[1].second - points[3].second) / 2;
+        return {x, y};
+    }
+
+    Rhombus& operator=(const Rhombus<T> &other) {
+        points = other.points;
+        return *this;
+    }
+
+    Rhombus& operator=(Rhombus<T> &&other) {
+        points = std::move(other.points);
+        return *this;
+    }
+
+    bool operator==(const Rhombus &other) const {
+        for (size_t i = 0; i < 4; ++i) {
+            if (points[i] != other.points[i]) {
+                return 0;
+            }
+        }
+        return 1;
+    }
+
+    operator double() const override;
+
+    ~Rhombus() = default;
+};
+
+template <typename T>
+std::istream &operator>>(std::istream &is, Rhombus<T> &r) {
+    for (size_t i = 0; i < 4; ++i) {
+        is >> r.points[i].first >> r.points[i].second;
+    }
+    return is;
+}
+
+template <typename T>
+std::ostream &operator<<(std::ostream &os, const Rhombus<T> &r) {
+    for (size_t i = 0; i < 4; ++i) {
+        os << "(" << r.points[i].first << ";" << r.points[i].second << ")"; 
+    }
+    return os;
+}
+
+template <typename T>
+inline Rhombus<T>::operator double() const {
+    return static_cast<double>(this->square());
+}
